@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Sibo Life Sciences</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #004080;
+            --accent-color: #ff6600;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --text-color: #333;
+            --text-light: #777;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+        }
+        
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #f5f5f5;
+            --card-bg: #1e1e1e;
+            --border-color: #333;
+            --primary-color: #4a8eff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning-color);
+            color: #000;
+        }
+        
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        /* Login Page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-box h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            text-align: center;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Admin Dashboard */
+        #admin-dashboard {
+            display: none;
+        }
+        
+        .admin-header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .admin-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        .admin-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .admin-nav a:hover,
+        .admin-nav a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 30px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        /* Products Table */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background: var(--light-color);
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        tr:hover {
+            background: var(--light-color);
+        }
+        
+        .product-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            color: var(--primary-color);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        /* Orders Section */
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-processing { background: #d1edff; color: var(--primary-color); }
+        .status-shipped { background: #cce5ff; color: #004085; }
+        .status-delivered { background: #d4edda; color: #155724; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="login-container">
+        <div class="login-box">
+            <h1><i class="fas fa-user-shield"></i> Admin Panel</h1>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Admin Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <div id="login-error" class="error-message"></div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="container header-content">
+                <div class="logo">
+                    <i class="fas fa-user-shield" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                    <h1>Sibo Admin</h1>
+                </div>
+                <nav class="admin-nav">
+                    <ul>
+                        <li><a href="#" onclick="loadSection('dashboard')" class="active">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a></li>
+                        <li><a href="#" onclick="loadSection('products')">
+                            <i class="fas fa-box"></i> Products
+                        </a></li>
+                        <li><a href="#" onclick="loadSection('orders')">
+                            <i class="fas fa-shopping-cart"></i> Orders
+                        </a></li>
+                        <li><a href="#" onclick="logout()" style="color: var(--danger-color);">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <main class="dashboard-content">
+            <div class="container">
+                <!-- Dashboard Section -->
+                <div id="dashboard-section" class="section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Total Products</h3>
+                            <div class="value" id="total-products">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Orders</h3>
+                            <div class="value" id="total-orders">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Pending Orders</h3>
+                            <div class="value" id="pending-orders">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Revenue</h3>
+                            <div class="value" id="total-revenue">KSh 0</div>
+                        </div>
+                    </div>
+                    
+                    <h2 style="margin: 30px 0 20px; color: var(--primary-color);">Recent Orders</h2>
+                    <div class="table-container">
+                        <div class="table-body">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-orders">
+                                    <!-- Recent orders will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Section -->
+                <div id="products-section" class="section" style="display: none;">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2 style="color: var(--primary-color);">Products Management</h2>
+                            <button onclick="showAddProductModal()" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Add Product
+                            </button>
+                        </div>
+                        <div class="table-body">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Category</th>
+                                        <th>Stock</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="products-table">
+                                    <!-- Products will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Section -->
+                <div id="orders-section" class="section" style="display: none;">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2 style="color: var(--primary-color);">Orders Management</h2>
+                        </div>
+                        <div class="table-body">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                        <th>Payment</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orders-table">
+                                    <!-- Orders will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Add New Product</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                
+                <div class="form-group">
+                    <label for="product-name">Product Name *</label>
+                    <input type="text" id="product-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-description">Description</label>
+                    <textarea id="product-description" class="form-control" rows="3"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-price">Price (KES) *</label>
+                        <input type="number" id="product-price" class="form-control" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-stock">Stock Quantity</label>
+                        <input type="number" id="product-stock" class="form-control" value="100">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-category">Category</label>
+                        <input type="text" id="product-category" class="form-control" value="Medical Supplies">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-image">Image URL</label>
+                        <input type="url" id="product-image" class="form-control" 
+                               placeholder="https://example.com/image.jpg">
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-save"></i> Save Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Order Details</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="order-details">
+                <!-- Order details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = window.location.origin;
+        let adminToken = null;
+
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedToken = localStorage.getItem('adminToken');
+            if (savedToken) {
+                adminToken = savedToken;
+                showDashboard();
+            }
+        });
+
+        // Login function
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('login-error');
+            
+            errorElement.textContent = '';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Login failed');
+                }
+                
+                adminToken = result.token;
+                localStorage.setItem('adminToken', adminToken);
+                
+                showDashboard();
+                loadDashboardStats();
+                
+            } catch (error) {
+                errorElement.textContent = error.message;
+            }
+        });
+
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('admin-dashboard').style.display = 'block';
+        }
+
+        // Load sections
+        function loadSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(`${section}-section`).style.display = 'block';
+            
+            // Add active class to clicked nav item
+            event.target.classList.add('active');
+            
+            // Load data for section
+            if (section === 'dashboard') {
+                loadDashboardStats();
+            } else if (section === 'products') {
+                loadProducts();
+            } else if (section === 'orders') {
+                loadOrders();
+            }
+        }
+
+        // Load dashboard statistics
+        async function loadDashboardStats() {
+            try {
+                // Load products count
+                const productsRes = await fetch(`${API_BASE_URL}/api/admin/products`, {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const productsData = await productsRes.json();
+                if (productsRes.ok) {
+                    document.getElementById('total-products').textContent = productsData.products?.length || 0;
+                }
+
+                // Load orders
+                const ordersRes = await fetch(`${API_BASE_URL}/api/admin/orders`, {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const ordersData = await ordersRes.json();
+                
+                if (ordersRes.ok) {
+                    const orders = ordersData.orders || [];
+                    document.getElementById('total-orders').textContent = orders.length;
+                    
+                    const pendingOrders = orders.filter(o => o.status === 'pending').length;
+                    document.getElementById('pending-orders').textContent = pendingOrders;
+                    
+                    const totalRevenue = orders.reduce((sum, order) => sum + parseFloat(order.total_amount || 0), 0);
+                    document.getElementById('total-revenue').textContent = `KSh ${totalRevenue.toLocaleString()}`;
+                    
+                    // Show recent orders
+                    const recentOrders = orders.slice(0, 5);
+                    const recentOrdersTable = document.getElementById('recent-orders');
+                    recentOrdersTable.innerHTML = '';
+                    
+                    recentOrders.forEach(order => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${order.id.substring(0, 8)}...</td>
+                            <td>${order.user_id ? 'User' : 'Guest'}</td>
+                            <td>KSh ${parseFloat(order.total_amount).toLocaleString()}</td>
+                            <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+                            <td>${new Date(order.created_at).toLocaleDateString()}</td>
+                        `;
+                        recentOrdersTable.appendChild(row);
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+
+        // Load products
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/products`, {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to load products');
+                }
+                
+                const tableBody = document.getElementById('products-table');
+                tableBody.innerHTML = '';
+                
+                if (!result.products || result.products.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px;">
+                                No products found. Add your first product!
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                result.products.forEach(product => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <img src="${product.image_url || 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80'}" 
+                                 class="product-img" alt="${product.name}">
+                        </td>
+                        <td>
+                            <strong>${product.name}</strong><br>
+                            <small style="color: var(--text-light);">${product.description?.substring(0, 50)}...</small>
+                        </td>
+                        <td>KSh ${parseFloat(product.price).toLocaleString()}</td>
+                        <td>${product.category}</td>
+                        <td>${product.stock}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button onclick="editProduct('${product.id}')" class="btn btn-warning" style="padding: 5px 10px;">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteProduct('${product.id}', '${product.name}')" class="btn btn-danger" style="padding: 5px 10px;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading products:', error);
+                alert('Error loading products: ' + error.message);
+            }
+        }
+
+        // Load orders
+        async function loadOrders() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/orders`, {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to load orders');
+                }
+                
+                const tableBody = document.getElementById('orders-table');
+                tableBody.innerHTML = '';
+                
+                if (!result.orders || result.orders.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 40px;">
+                                No orders found.
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                result.orders.forEach(order => {
+                    const items = JSON.parse(order.items || '[]');
+                    const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${order.id.substring(0, 8)}...</td>
+                        <td>${order.user_id ? 'User' : 'Guest'}</td>
+                        <td>${itemCount} items</td>
+                        <td>KSh ${parseFloat(order.total_amount).toLocaleString()}</td>
+                        <td>${order.payment_method}</td>
+                        <td>
+                            <select onchange="updateOrderStatus('${order.id}', this.value)" 
+                                    style="padding: 5px; border-radius: 4px; border: 1px solid var(--border-color);">
+                                <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Processing</option>
+                                <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Shipped</option>
+                                <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                                <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                            </select>
+                        </td>
+                        <td>${new Date(order.created_at).toLocaleDateString()}</td>
+                        <td>
+                            <button onclick="viewOrder('${order.id}')" class="btn" style="padding: 5px 10px;">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                alert('Error loading orders: ' + error.message);
+            }
+        }
+
+        // Show add product modal
+        function showAddProductModal() {
+            document.getElementById('modal-title').textContent = 'Add New Product';
+            document.getElementById('product-form').reset();
+            document.getElementById('product-id').value = '';
+            document.getElementById('product-modal').style.display = 'flex';
+        }
+
+        // Edit product
+        async function editProduct(productId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/products`, {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to load product');
+                }
+                
+                const product = result.products.find(p => p.id === productId);
+                if (!product) throw new Error('Product not found');
+                
+                document.getElementById('modal-title').textContent = 'Edit Product';
+                document.getElementById('product-id').value = product.id;
+                document.getElementById('product-name').value = product.name;
+                document.getElementById('product-description').value = product.description || '';
+                document.getElementById('product-price').value = product.price;
+                document.getElementById('product-stock').value = product.stock;
+                document.getElementById('product-category').value = product.category;
+                document.getElementById('product-image').value = product.image_url || '';
+                
+                document.getElementById('product-modal').style.display = 'flex';
+                
+            } catch (error) {
+                alert('Error loading product: ' + error.message);
+            }
+        }
+
+        // Save product
+        document.getElementById('product-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const productId = document.getElementById('product-id').value;
+            const productData = {
+                name: document.getElementById('product-name').value,
+                description: document.getElementById('product-description').value,
+                price: document.getElementById('product-price').value,
+                stock: document.getElementById('product-stock').value,
+                category: document.getElementById('product-category').value,
+                image_url: document.getElementById('product-image').value
+            };
+            
+            try {
+                const url = productId ? 
+                    `${API_BASE_URL}/api/admin/products/${productId}` : 
+                    `${API_BASE_URL}/api/admin/products`;
+                
+                const method = productId ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify(productData)
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to save product');
+                }
+                
+                alert(result.message || 'Product saved successfully!');
+                closeModal();
+                loadProducts();
+                
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+
+        // Delete product
+        async function deleteProduct(productId, productName) {
+            if (!confirm(`Are you sure you want to delete "${productName}"?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/products/${productId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to delete product');
+                }
+                
+                alert('Product deleted successfully!');
+                loadProducts();
+                
+            } catch (error) {
+                alert('Error deleting product: ' + error.message);
+            }
+        }
+
+        // Update order status
+        async function updateOrderStatus(orderId, status) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/orders/${orderId}`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify({ status: status })
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to update order');
+                }
+                
+                // Reload orders if on orders page
+                if (document.getElementById('orders-section').style.display !== 'none') {
+                    loadOrders();
+                }
+                
+            } catch (error) {
+                alert('Error updating order: ' + error.message);
+            }
+        }
+
+        // View order details
+        async function viewOrder(orderId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/orders`, {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to load order');
+                }
+                
+                const order = result.orders.find(o => o.id === orderId);
+                if (!order) throw new Error('Order not found');
+                
+                const items = JSON.parse(order.items || '[]');
+                let itemsHtml = '<h3>Order Items:</h3><ul>';
+                items.forEach(item => {
+                    itemsHtml += `<li>${item.name} x${item.quantity} - KSh ${(item.price * item.quantity).toLocaleString()}</li>`;
+                });
+                itemsHtml += '</ul>';
+                
+                document.getElementById('order-details').innerHTML = `
+                    <div style="padding: 20px;">
+                        <p><strong>Order ID:</strong> ${order.id}</p>
+                        <p><strong>Total Amount:</strong> KSh ${parseFloat(order.total_amount).toLocaleString()}</p>
+                        <p><strong>Payment Method:</strong> ${order.payment_method}</p>
+                        <p><strong>Status:</strong> ${order.status}</p>
+                        <p><strong>Date:</strong> ${new Date(order.created_at).toLocaleString()}</p>
+                        ${order.delivery_address ? `<p><strong>Delivery Address:</strong> ${order.delivery_address}</p>` : ''}
+                        ${itemsHtml}
+                    </div>
+                `;
+                
+                document.getElementById('order-modal').style.display = 'flex';
+                
+            } catch (error) {
+                alert('Error loading order: ' + error.message);
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('product-modal').style.display = 'none';
+            document.getElementById('order-modal').style.display = 'none';
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                adminToken = null;
+                localStorage.removeItem('adminToken');
+                location.reload();
+            }
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
