@@ -46,7 +46,6 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files from current directory
 app.use(express.static(__dirname));
 
-const path = require('path'); // ADD THIS AT THE TOP with other requires
 
 // ==================== STATIC FILE SERVING ====================
 
