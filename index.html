@@ -1677,6 +1677,415 @@
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
+        /* Product Detail Modal Styles */
+#product-detail-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 4000;
+    overflow-y: auto;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.product-detail-content {
+    background: var(--card-bg);
+    width: 95%;
+    max-width: 1100px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+    animation: modalSlideUp 0.4s ease;
+    position: relative;
+}
+
+@keyframes modalSlideUp {
+    from { 
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-modal-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    transform: rotate(90deg);
+}
+
+.product-detail-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 40px;
+}
+
+.product-detail-images {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-image {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--light-color);
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+    cursor: zoom-in;
+}
+
+.main-image img:hover {
+    transform: scale(1.05);
+}
+
+.image-thumbnails {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.thumbnail.active {
+    border-color: var(--primary-color);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.product-detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.product-header h1 {
+    font-size: 2.2rem;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.product-price-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.current-price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.original-price {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    text-decoration: line-through;
+}
+
+.discount-badge {
+    background: #ff4444;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stars {
+    color: #ffc107;
+}
+
+.rating-text {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.product-description h3,
+.product-specifications h3 {
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-description h3 i,
+.product-specifications h3 i {
+    color: var(--accent-color);
+}
+
+.product-description p {
+    line-height: 1.6;
+    color: var(--text-color);
+    font-size: 1.05rem;
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.spec-item {
+    background: var(--light-color);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.spec-label {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.spec-value {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.product-actions {
+    background: var(--light-color);
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.qty-btn {
+    width: 45px;
+    height: 45px;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.qty-btn:hover {
+    background: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+#detail-quantity {
+    width: 70px;
+    height: 45px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+.stock-status {
+    padding: 8px 15px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: auto;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.action-buttons .btn {
+    flex: 1;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+#add-to-cart-from-detail {
+    background: var(--primary-color);
+}
+
+#add-to-cart-from-detail:hover {
+    background: var(--secondary-color);
+    transform: translateY(-3px);
+}
+
+#buy-now-btn {
+    background: #4CAF50;
+}
+
+#buy-now-btn:hover {
+    background: #45a049;
+    transform: translateY(-3px);
+}
+
+.product-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border-color);
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.meta-item i {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .product-detail-wrapper {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .product-detail-content {
+        margin: 10px auto;
+        width: 98%;
+        border-radius: 10px;
+    }
+    
+    .product-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .current-price {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-detail-wrapper {
+        padding: 20px;
+    }
+    
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-meta {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .quantity-selector {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-detail-wrapper {
+        padding: 15px;
+    }
+    
+    .product-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .product-actions {
+        padding: 20px;
+    }
+}
     </style>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JL2V9K8J76"></script>
@@ -1808,62 +2217,173 @@
         </ul>
     </nav>
 
- <!-- Hero Section -->
+<!-- Hero Section - with responsive inline styles -->
 <section class="hero" id="home">
     <div class="hero-content">
-        <h1 style="margin-bottom: 12px; font-size: 2rem;">Advanced Life Sciences Solutions for Healthcare</h1>
-        <p class="hero-subtitle" style="margin-bottom: 15px; font-size: 1.2rem;">Sibo Life Sciences provides cutting-edge medical technologies, pharmaceuticals, and research tools to hospitals, clinics, and research institutions worldwide.</p>
+        <h1 style="margin-bottom: 8px; font-size: clamp(1.5rem, 4vw, 2.2rem);">
+            Welcome to Sibo Life Sciences
+        </h1>
         
-        <!-- Professional SIBO Values Integration -->
-        <div class="mission-statement" style="max-width: 800px; margin: 12px auto;">
-            <div style="text-align: center; margin-bottom: 12px;">
-                <h3 style="color: var(--accent-color); font-size: 1.1rem; margin-bottom: 4px;">Built on Our Core Values</h3>
-                <p style="color: #ffffff; font-style: italic; font-size: 0.85rem;">Excellence in healthcare through commitment and innovation</p>
+        <p class="hero-intro" style="margin-bottom: 10px; font-size: clamp(0.9rem, 2.5vw, 1.2rem); line-height: 1.4;">
+            We are a next-generation partner for global healthcare. Founded in 2025, Sibo Life Sciences delivers cutting-edge medical technologies, pharmaceuticals, and research tools to drive progress from discovery to patient care.
+        </p>
+        
+        <p class="hero-subtitle" style="margin-bottom: 15px; font-size: clamp(0.8rem, 2vw, 1rem);">
+            Providing innovative solutions to hospitals, clinics, and research institutions worldwide.
+        </p>
+        
+        <a href="#about" class="btn-read-more" style="display: inline-block; padding: 10px 20px; background: #0077b6; color: white; text-decoration: none; border-radius: 4px; font-weight: 600; margin-bottom: 15px; font-size: clamp(0.85rem, 2vw, 1rem);">
+            Read More
+        </a>
+
+        <div class="mission-statement" style="max-width: 800px; margin: 15px auto 20px;">
+            <div style="text-align: center; margin-bottom: 8px;">
+                <h3 style="color: var(--accent-color); font-size: clamp(0.9rem, 2vw, 1rem); margin-bottom: 3px;">Built on Our Core Values</h3>
+                <p style="color: #ffffff; font-style: italic; font-size: clamp(0.75rem, 1.5vw, 0.8rem);">Excellence in healthcare through commitment and innovation</p>
             </div>
             
-            <div class="values-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px;">
-                <div class="value-card" style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border-left: 2px solid var(--accent-color);">
-                    <div style="display: flex; align-items: center; margin-bottom: 6px;">
-                        <div style="background: var(--accent-color); color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; margin-right: 8px;">S</div>
-                        <h4 style="color: white; margin: 0; font-size: 0.9rem;">Sustainability</h4>
+            <div class="values-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 8px;">
+                <div class="value-card" style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border-left: 2px solid var(--accent-color);">
+                    <div style="display: flex; align-items: flex-start; margin-bottom: 6px;">
+                        <div style="background: var(--accent-color); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: clamp(0.9rem, 1.5vw, 1rem); margin-right: 10px; flex-shrink: 0;">S</div>
+                        <div>
+                            <h4 style="color: white; margin: 0 0 4px 0; font-size: clamp(0.85rem, 1.5vw, 0.9rem);">Sustainability</h4>
+                            <p style="color: #ffffff; font-size: clamp(0.7rem, 1.2vw, 0.75rem); line-height: 1.3; margin: 0;">Committed to environmentally responsible practices and ensuring long-term viability in healthcare delivery.</p>
+                        </div>
                     </div>
-                    <p style="color: #ffffff; font-size: 0.75rem; line-height: 1.2; margin: 0;">Committed to environmentally responsible practices and ensuring long-term viability in healthcare delivery.</p>
                 </div>
                 
-                <div class="value-card" style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border-left: 2px solid var(--accent-color);">
-                    <div style="display: flex; align-items: center; margin-bottom: 6px;">
-                        <div style="background: var(--accent-color); color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; margin-right: 8px;">I</div>
-                        <h4 style="color: white; margin: 0; font-size: 0.9rem;">Innovation</h4>
+                <div class="value-card" style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border-left: 2px solid var(--accent-color);">
+                    <div style="display: flex; align-items: flex-start; margin-bottom: 6px;">
+                        <div style="background: var(--accent-color); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: clamp(0.9rem, 1.5vw, 1rem); margin-right: 10px; flex-shrink: 0;">I</div>
+                        <div>
+                            <h4 style="color: white; margin: 0 0 4px 0; font-size: clamp(0.85rem, 1.5vw, 0.9rem);">Innovation</h4>
+                            <p style="color: #ffffff; font-size: clamp(0.7rem, 1.2vw, 0.75rem); line-height: 1.3; margin: 0;">Pioneering advanced medical technologies and research to transform patient care and treatment outcomes.</p>
+                        </div>
                     </div>
-                    <p style="color: #ffffff; font-size: 0.75rem; line-height: 1.2; margin: 0;">Pioneering advanced medical technologies and research to transform patient care and treatment outcomes.</p>
                 </div>
                 
-                <div class="value-card" style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border-left: 2px solid var(--accent-color);">
-                    <div style="display: flex; align-items: center; margin-bottom: 6px;">
-                        <div style="background: var(--accent-color); color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; margin-right: 8px;">B</div>
-                        <h4 style="color: white; margin: 0; font-size: 0.9rem;">Business Integrity</h4>
+                <div class="value-card" style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border-left: 2px solid var(--accent-color);">
+                    <div style="display: flex; align-items: flex-start; margin-bottom: 6px;">
+                        <div style="background: var(--accent-color); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: clamp(0.9rem, 1.5vw, 1rem); margin-right: 10px; flex-shrink: 0;">B</div>
+                        <div>
+                            <h4 style="color: white; margin: 0 0 4px 0; font-size: clamp(0.85rem, 1.5vw, 0.9rem);">Business Integrity</h4>
+                            <p style="color: #ffffff; font-size: clamp(0.7rem, 1.2vw, 0.75rem); line-height: 1.3; margin: 0;">Upholding the highest ethical standards, transparency, and accountability in all healthcare partnerships.</p>
+                        </div>
                     </div>
-                    <p style="color: #ffffff; font-size: 0.75rem; line-height: 1.2; margin: 0;">Upholding the highest ethical standards, transparency, and accountability in all healthcare partnerships.</p>
                 </div>
                 
-                <div class="value-card" style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 6px; border-left: 2px solid var(--accent-color);">
-                    <div style="display: flex; align-items: center; margin-bottom: 6px;">
-                        <div style="background: var(--accent-color); color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; margin-right: 8px;">O</div>
-                        <h4 style="color: white; margin: 0; font-size: 0.9rem;">Ownership</h4>
+                <div class="value-card" style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border-left: 2px solid var(--accent-color);">
+                    <div style="display: flex; align-items: flex-start; margin-bottom: 6px;">
+                        <div style="background: var(--accent-color); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: clamp(0.9rem, 1.5vw, 1rem); margin-right: 10px; flex-shrink: 0;">O</div>
+                        <div>
+                            <h4 style="color: white; margin: 0 0 4px 0; font-size: clamp(0.85rem, 1.5vw, 0.9rem);">Ownership</h4>
+                            <p style="color: #ffffff; font-size: clamp(0.7rem, 1.2vw, 0.75rem); line-height: 1.3; margin: 0;">Taking full responsibility for delivering exceptional healthcare solutions that make a meaningful impact.</p>
+                        </div>
                     </div>
-                    <p style="color: #ffffff; font-size: 0.75rem; line-height: 1.2; margin: 0;">Taking full responsibility for delivering exceptional healthcare solutions that make a meaningful impact.</p>
                 </div>
             </div>
         </div>
 
         <div class="hero-btns" style="margin-top: 15px;">
-            <a href="#products" class="btn" style="padding: 8px 20px; font-size: 0.9rem;">Explore Our Products</a>
-            <a href="#contact" class="btn btn-accent" style="padding: 8px 20px; font-size: 0.9rem;">Partner With Us</a>
+            <a href="#products" class="btn" style="display: inline-block; padding: 10px 20px; font-size: clamp(0.85rem, 2vw, 0.9rem); margin-right: 8px; background: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 4px; border: 1px solid rgba(255,255,255,0.3);">
+                Explore Our Products
+            </a>
+            <a href="#contact" class="btn btn-accent" style="display: inline-block; padding: 10px 20px; font-size: clamp(0.85rem, 2vw, 0.9rem); background: var(--accent-color); color: white; text-decoration: none; border-radius: 4px; border: none;">
+                Partner With Us
+            </a>
         </div>
     </div>
 </section>
 
+<!-- Add this CSS for better mobile responsiveness -->
 <style>
+@media (max-width: 768px) {
+    .hero-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .hero-btns .btn {
+        width: 100%;
+        text-align: center;
+        margin-right: 0 !important;
+    }
+    
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .values-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .value-card {
+        padding: 10px !important;
+    }
+}
+</style>
+<style>
+    @media (max-width: 768px) {
+    /* Adjust for tablets */
+    .hero-content h1 {
+        font-size: 1.8rem !important;
+        margin-bottom: 6px !important;
+    }
+    
+    .hero-intro {
+        font-size: 1rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 6px !important;
+    }
+    
+    .btn-read-more,
+    .hero-btns .btn {
+        padding: 8px 16px !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Adjust for phones */
+    .hero-content h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    .hero-intro {
+        font-size: 0.9rem !important;
+    }
+    
+    .values-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    
+    .hero-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .hero-btns .btn {
+        width: 100%;
+        text-align: center;
+        margin-right: 0 !important;
+    }
+}
     /* Mobile responsiveness */
     @media (max-width: 768px) {
         .values-grid {
@@ -2446,8 +2966,7 @@
                             <div>
                                 <h4>Phone</h4>
                                 <p>
-                                    <a href="tel:+254743105060" class="contact-link">+254 743 105 060</a>
-                                    <a href="tel:+254702499166" class="contact-link">+254 702 499 166</a>
+                                    <a href="tel:+254736502954" class="contact-link">+254 736 502 954</a>
                                 </p>
                             </div>
                         </div>
@@ -2460,9 +2979,6 @@
                                 <p>
                                     <a href="mailto:sibolifescience@gmail.com?subject=Inquiry from Website&body=Hello Sibo Life Sciences," class="contact-link">
                                         sibolifescience@gmail.com
-                                    </a>
-                                    <a href="mailto:juniormamleen@gmail.com?subject=Inquiry from Website&body=Hello Sibo Life Sciences," class="contact-link">
-                                        juniormamleen@gmail.com
                                     </a>
                                     <span class="contact-status">Always Open</span>
                                 </p>
@@ -2608,10 +3124,10 @@
                 </div>
                 <div class="footer-col">
                     <h3>Contact Info</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Kamukuywa, P.O. Box 123-50205, Kenya</p>
+                    <p><i class="fas fa-map-marker-alt"></i>P.O. BOX 3355-30100,Eldoret, Kenya</p>
                     <p>
                         <i class="fas fa-phone-alt"></i> 
-                        <a href="tel:+254743105060" style="color: #ddd;">+254 743 105 060</a>
+                        <a href="tel:+254743105060" style="color: #ddd;">+254 736 502 954</a>
                     </p>
                     <p>
                         <i class="fas fa-envelope"></i> 
@@ -4463,25 +4979,32 @@ async function loadProductsFromDatabase() {
         result.products.forEach(product => {
             const productCard = document.createElement('div');
             productCard.className = 'product-card';
-            productCard.innerHTML = `
-                <div class="product-img">
-                    <img src="${product.image_url || 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'}" 
-                         loading="lazy" alt="${product.name}">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">${product.name}</h3>
-                    <p class="product-desc">${product.description || ''}</p>
-                    <div class="product-footer">
-                        <span class="product-price">KSh ${parseFloat(product.price).toLocaleString()}</span>
-                        <button class="add-to-cart" 
-                                data-id="${product.id}" 
-                                data-name="${product.name}" 
-                                data-price="${product.price}">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            `;
+           // Replace the product card HTML in loadProductsFromDatabase():
+productCard.innerHTML = `
+    <div class="product-img">
+        <img src="${product.image_url}" alt="${product.name}" loading="lazy">
+    </div>
+    <div class="product-info">
+        <h3 class="product-title">${product.name}</h3>
+        <p class="product-desc">${product.short_description || ''}</p>
+        <div class="product-footer">
+            <span class="product-price">KSh ${parseFloat(product.price).toLocaleString()}</span>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-view-details" 
+                        data-product-id="${product.id}"
+                        style="background: var(--light-color); color: var(--text-color);">
+                    <i class="fas fa-eye"></i> Details
+                </button>
+                <button class="add-to-cart" 
+                        data-id="${product.id}" 
+                        data-name="${product.name}" 
+                        data-price="${product.price}">
+                    <i class="fas fa-shopping-cart"></i> Add
+                </button>
+            </div>
+        </div>
+    </div>
+`;
             productsContainer.appendChild(productCard);
         });
         
@@ -4734,6 +5257,449 @@ async function loadProductsFromDatabase() {
 document.addEventListener('DOMContentLoaded', function() {
     loadProductsFromDatabase();
 });
+// ==================== PRODUCT DETAIL MODAL ====================
+
+// DOM Elements
+const productDetailModal = document.getElementById('product-detail-modal');
+const closeProductModal = document.getElementById('close-product-modal');
+const viewDetailButtons = document.querySelectorAll('.btn-view-details');
+const addToCartFromDetail = document.getElementById('add-to-cart-from-detail');
+const buyNowBtn = document.getElementById('buy-now-btn');
+const detailQuantity = document.getElementById('detail-quantity');
+
+// Current product being viewed
+let currentProductDetail = null;
+
+// Open product detail modal
+function openProductDetailModal(productId) {
+    console.log('Opening product detail for ID:', productId);
+    
+    // Show loading state
+    showModalLoading();
+    
+    // Fetch product details from API
+    fetchProductDetails(productId)
+        .then(product => {
+            if (!product) {
+                throw new Error('Product not found');
+            }
+            
+            currentProductDetail = product;
+            populateProductDetailModal(product);
+            productDetailModal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        })
+        .catch(error => {
+            console.error('Error loading product details:', error);
+            showNotification('Error loading product details', 'error');
+            productDetailModal.style.display = 'none';
+        });
+}
+
+// Fetch product details from API
+async function fetchProductDetails(productId) {
+    try {
+        console.log('Fetching product details for ID:', productId);
+        
+        // Try your API endpoint first
+        const response = await fetch(`/api/products/${productId}`);
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (!result.product) {
+            throw new Error('Product not found in response');
+        }
+        
+        console.log('Product details fetched:', result.product);
+        return result.product;
+        
+    } catch (error) {
+        console.error('API fetch failed, using sample data:', error);
+        
+        // Fallback: Use sample data for demo
+        return getSampleProductData(productId);
+    }
+}
+
+// Sample product data (for demo/testing)
+function getSampleProductData(productId) {
+    const sampleProducts = {
+        1: {
+            id: 1,
+            name: "Medical Face Mask (N95)",
+            description: "High-quality N95 respirator mask providing 95% filtration efficiency against airborne particles. Ideal for medical professionals and high-risk environments.",
+            price: 2500,
+            original_price: 3000,
+            images: [
+                "https://images.unsplash.com/photo-1584634731339-252c581abfc5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+            ],
+            specifications: {
+                "Material": "Polypropylene",
+                "Filtration": "95%",
+                "Layers": "5",
+                "Size": "Standard Adult",
+                "Certification": "FDA Approved",
+                "Shelf Life": "3 years"
+            },
+            rating: 4.5,
+            reviews: 128,
+            stock: 50
+        },
+        2: {
+            id: 2,
+            name: "Digital Thermometer",
+            description: "Non-contact infrared thermometer with instant readings. Features fever alarm, memory function, and LCD display.",
+            price: 3500,
+            original_price: 4200,
+            images: [
+                "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+            ],
+            specifications: {
+                "Type": "Infrared",
+                "Measurement Range": "32-43°C",
+                "Accuracy": "±0.2°C",
+                "Battery": "AAA x 2",
+                "Memory": "32 readings",
+                "Display": "Backlit LCD"
+            },
+            rating: 4.2,
+            reviews: 89,
+            stock: 25
+        }
+    };
+    
+    return sampleProducts[productId] || sampleProducts[1];
+}
+
+// Populate modal with product data
+function populateProductDetailModal(product) {
+    console.log('Populating modal with:', product);
+    
+    // Basic Info
+    document.getElementById('detail-product-name').textContent = product.name;
+    document.getElementById('detail-current-price').textContent = `KSh ${product.price.toLocaleString()}`;
+    document.getElementById('detail-description').textContent = product.description;
+    
+    // Price & Discount
+    if (product.original_price && product.original_price > product.price) {
+        const discount = Math.round(((product.original_price - product.price) / product.original_price) * 100);
+        document.getElementById('detail-original-price').textContent = `KSh ${product.original_price.toLocaleString()}`;
+        document.getElementById('detail-discount').textContent = `-${discount}%`;
+    } else {
+        document.getElementById('detail-original-price').style.display = 'none';
+        document.getElementById('detail-discount').style.display = 'none';
+    }
+    
+    // Rating
+    if (product.rating) {
+        document.getElementById('detail-rating').innerHTML = `
+            <div class="stars">
+                ${generateStarRating(product.rating)}
+            </div>
+            <span class="rating-text">(${product.rating}) • ${product.reviews || 0} reviews</span>
+        `;
+    }
+    
+    // Images
+    const mainImage = document.getElementById('detail-main-image');
+    const thumbnailsContainer = document.getElementById('image-thumbnails');
+    
+    if (product.images && product.images.length > 0) {
+        mainImage.src = product.images[0];
+        mainImage.alt = product.name;
+        
+        // Clear thumbnails
+        thumbnailsContainer.innerHTML = '';
+        
+        // Add thumbnails
+        product.images.forEach((img, index) => {
+            const thumbnail = document.createElement('div');
+            thumbnail.className = `thumbnail ${index === 0 ? 'active' : ''}`;
+            thumbnail.innerHTML = `<img src="${img}" alt="${product.name} ${index + 1}">`;
+            
+            thumbnail.addEventListener('click', () => {
+                // Update main image
+                mainImage.src = img;
+                
+                // Update active thumbnail
+                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                thumbnail.classList.add('active');
+            });
+            
+            thumbnailsContainer.appendChild(thumbnail);
+        });
+    }
+    
+    // Specifications
+    const specsContainer = document.getElementById('detail-specifications');
+    specsContainer.innerHTML = '';
+    
+    if (product.specifications) {
+        Object.entries(product.specifications).forEach(([key, value]) => {
+            const specItem = document.createElement('div');
+            specItem.className = 'spec-item';
+            specItem.innerHTML = `
+                <div class="spec-label">${key}</div>
+                <div class="spec-value">${value}</div>
+            `;
+            specsContainer.appendChild(specItem);
+        });
+    }
+    
+    // Stock status
+    const stockElement = document.getElementById('detail-stock');
+    if (product.stock > 10) {
+        stockElement.textContent = 'In Stock';
+        stockElement.style.background = '#4CAF50';
+    } else if (product.stock > 0) {
+        stockElement.textContent = `Only ${product.stock} left`;
+        stockElement.style.background = '#ff9800';
+    } else {
+        stockElement.textContent = 'Out of Stock';
+        stockElement.style.background = '#f44336';
+    }
+    
+    // Quantity max
+    detailQuantity.max = Math.min(product.stock || 10, 10);
+}
+
+// Generate star rating HTML
+function generateStarRating(rating) {
+    let stars = '';
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    
+    for (let i = 1; i <= 5; i++) {
+        if (i <= fullStars) {
+            stars += '<i class="fas fa-star"></i>';
+        } else if (i === fullStars + 1 && hasHalfStar) {
+            stars += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+            stars += '<i class="far fa-star"></i>';
+        }
+    }
+    
+    return stars;
+}
+
+// Show loading state in modal
+function showModalLoading() {
+    document.getElementById('detail-product-name').textContent = 'Loading...';
+    document.getElementById('detail-description').textContent = 'Loading product details...';
+    document.getElementById('detail-specifications').innerHTML = '<div class="loading">Loading specifications...</div>';
+}
+
+// Close modal
+function closeProductDetailModal() {
+    productDetailModal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restore scrolling
+    currentProductDetail = null;
+}
+
+// Quantity controls
+document.querySelector('.qty-btn.minus').addEventListener('click', () => {
+    let value = parseInt(detailQuantity.value);
+    if (value > 1) {
+        detailQuantity.value = value - 1;
+    }
+});
+
+document.querySelector('.qty-btn.plus').addEventListener('click', () => {
+    let value = parseInt(detailQuantity.value);
+    const max = parseInt(detailQuantity.max);
+    if (value < max) {
+        detailQuantity.value = value + 1;
+    }
+});
+
+// Add to cart from detail modal
+addToCartFromDetail.addEventListener('click', () => {
+    if (!currentProductDetail) return;
+    
+    const quantity = parseInt(detailQuantity.value);
+    const existingItem = cart.find(item => item.id === currentProductDetail.id.toString());
+    
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({
+            id: currentProductDetail.id.toString(),
+            name: currentProductDetail.name,
+            price: currentProductDetail.price,
+            quantity: quantity
+        });
+    }
+    
+    updateCart();
+    showNotification(`${currentProductDetail.name} (${quantity}) added to cart!`);
+    
+    // Optional: Close modal after adding
+    // closeProductDetailModal();
+});
+
+// Buy now button
+buyNowBtn.addEventListener('click', () => {
+    if (!currentProductDetail) return;
+    
+    const quantity = parseInt(detailQuantity.value);
+    
+    // Clear cart and add only this item
+    cart = [{
+        id: currentProductDetail.id.toString(),
+        name: currentProductDetail.name,
+        price: currentProductDetail.price,
+        quantity: quantity
+    }];
+    
+    updateCart();
+    closeProductDetailModal();
+    
+    // Open cart modal to checkout
+    setTimeout(() => {
+        cartModal.style.display = 'flex';
+    }, 300);
+});
+
+// Close modal when clicking X
+closeProductModal.addEventListener('click', closeProductDetailModal);
+
+// Close modal when clicking outside
+productDetailModal.addEventListener('click', (e) => {
+    if (e.target === productDetailModal) {
+        closeProductDetailModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && productDetailModal.style.display === 'block') {
+        closeProductDetailModal();
+    }
+});
+
+// Attach event listeners to view detail buttons
+function attachDetailButtonListeners() {
+    // Remove existing listeners first
+    document.querySelectorAll('.btn-view-details').forEach(button => {
+        button.replaceWith(button.cloneNode(true));
+    });
+    
+    // Add new listeners
+    document.querySelectorAll('.btn-view-details').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent event bubbling
+            const productId = this.getAttribute('data-product-id');
+            openProductDetailModal(productId);
+        });
+    });
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    // Attach listeners after products load
+    setTimeout(() => {
+        attachDetailButtonListeners();
+    }, 1000);
+    
+    // Also update your existing product loading function
+    const originalLoadProducts = loadProductsFromDatabase;
+    loadProductsFromDatabase = async function() {
+        await originalLoadProducts();
+        attachDetailButtonListeners();
+    };
+});
     </script>
+    <!-- Product Detail Modal -->
+<div id="product-detail-modal" class="modal">
+    <div class="product-detail-content">
+        <button class="close-modal-btn" id="close-product-modal">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="product-detail-wrapper">
+            <!-- Left Column: Product Images -->
+            <div class="product-detail-images">
+                <div class="main-image">
+                    <img id="detail-main-image" src="" alt="Product Image">
+                </div>
+                <div class="image-thumbnails" id="image-thumbnails">
+                    <!-- Thumbnails will be added here dynamically -->
+                </div>
+            </div>
+            
+            <!-- Right Column: Product Info -->
+            <div class="product-detail-info">
+                <div class="product-header">
+                    <h1 id="detail-product-name">Product Name</h1>
+                    <div class="product-price-section">
+                        <span class="current-price" id="detail-current-price">KSh 0</span>
+                        <span class="original-price" id="detail-original-price"></span>
+                        <span class="discount-badge" id="detail-discount"></span>
+                    </div>
+                    <div class="product-rating" id="detail-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-text">(4.5) • 120 reviews</span>
+                    </div>
+                </div>
+                
+                <div class="product-description">
+                    <h3><i class="fas fa-info-circle"></i> Description</h3>
+                    <p id="detail-description">Loading description...</p>
+                </div>
+                
+                <div class="product-specifications">
+                    <h3><i class="fas fa-list-alt"></i> Specifications</h3>
+                    <div class="specs-grid" id="detail-specifications">
+                        <!-- Specifications will be added dynamically -->
+                    </div>
+                </div>
+                
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                        <input type="number" id="detail-quantity" value="1" min="1" max="10">
+                        <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                        <span class="stock-status" id="detail-stock">In Stock</span>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-accent" id="add-to-cart-from-detail">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="btn btn-success" id="buy-now-btn">
+                            <i class="fas fa-bolt"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>Free delivery within Nairobi</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-undo"></i>
+                        <span>14-day return policy</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>1-year warranty</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
